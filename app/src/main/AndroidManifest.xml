@@ -15,9 +15,6 @@
         android:theme="@style/Theme.RoutineQuestMobile"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".CreateTaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
