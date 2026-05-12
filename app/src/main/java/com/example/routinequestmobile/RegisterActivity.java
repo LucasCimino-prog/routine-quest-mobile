@@ -38,14 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
                     String emailDigitado = etEmail.getText().toString();
                     String senhaDigitada = etPassword.getText().toString();
 
-// Cria o pacote com os dados
+                    // Cria o pacote com os dados
                     RegisterRequest registerRequest = new RegisterRequest(nomeDigitado, emailDigitado, senhaDigitada);
 
-// Chama o carteiro
+                    // Chama o carteiro
                     ApiService apiService = ApiClient.getClient().create(ApiService.class);
                     Call<Void> call = apiService.registerUser(registerRequest);
 
-// Envia para o Spring Boot
+                    // Envia para o Spring Boot
                     call.enqueue(new retrofit2.Callback<Void>() {
                         @Override
                         public void onResponse(retrofit2.Call<Void> call, retrofit2.Response<Void> response) {

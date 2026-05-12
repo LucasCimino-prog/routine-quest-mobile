@@ -41,7 +41,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         if (currentTask != null) {
             tvTaskTitle.setText(currentTask.getName() + " (+ " + currentTask.getXpReward() + " XP)");
 
-            // O que acontece ao clicar no botão vermelho "X"
+            // O que acontece ao clicar no "X"
             btnDeleteTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

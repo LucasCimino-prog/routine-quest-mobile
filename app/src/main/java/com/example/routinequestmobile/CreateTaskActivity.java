@@ -1,5 +1,6 @@
 package com.example.routinequestmobile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,10 +35,8 @@ public class CreateTaskActivity extends AppCompatActivity {
         rgAttributes = findViewById(R.id.rgAttributes);
         btnSaveTask = findViewById(R.id.btnSaveTask);
 
-        // --- MODO EDIÇÃO ---
         // Verifica se a tela foi chamada com dados (do toque na lista)
         if (getIntent().hasExtra("TASK_ID")) {
-            // Usamos -1L como padrão para saber se algo deu errado
             taskEditId = getIntent().getLongExtra("TASK_ID", -1L);
 
             if (taskEditId != -1L) {
@@ -62,7 +61,6 @@ public class CreateTaskActivity extends AppCompatActivity {
                 taskEditId = null; // Caso o ID venha inválido, volta para modo criação
             }
         }
-        // -------------------
 
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +94,6 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         // Monta o objeto com os dados novos
         Task taskDetails = new Task(name, desc, xp, attributeType, 2, duration);
-        // Mantém o status pendente por enquanto
         taskDetails.setStatus("PENDING");
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
@@ -104,7 +101,14 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         // Se o ID for nulo, Rota de Criar. Se tiver ID, Rota de Atualizar!
         if (taskEditId == null) {
-            Long userId = 1L; // Fixado por enquanto
+            SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+            Long userId = prefs.getLong("USER_ID", -1L);
+
+            if (userId == -1L) {
+                Toast.makeText(this, "Usuário não identificado. Faça login novamente.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             call = apiService.createTask(userId, taskDetails);
         } else {
             call = apiService.updateTask(taskEditId, taskDetails);

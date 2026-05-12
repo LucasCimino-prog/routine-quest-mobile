@@ -41,16 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 LoginRequest loginRequest = new LoginRequest(email, password);
                 ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
-                // Chamada espera um LoginResponse (que contém o token)
+                // Chamada espera um LoginResponse
                 apiService.loginUser(loginRequest).enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             String tokenPuro = response.body().getToken();
+                            Long userId = response.body().getUserId();
 
-                            getSharedPreferences("RoutineQuest", MODE_PRIVATE)
+                            getSharedPreferences("USER_PREFS", MODE_PRIVATE)
                                     .edit()
-                                    .putString("token", tokenPuro) // Salva só a "chave"
+                                    .putString("token", tokenPuro)
+                                    .putLong("USER_ID", userId)
                                     .apply();
 
                             startActivity(new Intent(MainActivity.this, HomeActivity.class));

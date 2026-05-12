@@ -1,6 +1,7 @@
 package com.example.routinequestmobile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -84,7 +85,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void carregarTarefas() {
-        Long userId = 1L;
+        SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        Long userId = prefs.getLong("USER_ID", -1L);
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<List<Task>> call = apiService.getUserTasks(userId);
@@ -119,7 +121,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buscarTarefasNoServidor(String termoBusca) {
-        Long userId = 1L; // Fixado por enquanto
+        SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        Long userId = prefs.getLong("USER_ID", -1L); // Fixado por enquanto
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<List<Task>> call = apiService.searchTasks(userId, termoBusca);
@@ -134,7 +137,7 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Nenhuma missão encontrada.", Toast.LENGTH_SHORT).show();
                     }
 
-                    // Reutilizamos o adaptador que já criamos antes!
+                    // Reutilizamos o adaptador que já foi criado antes!
                     TaskAdapter adapter = new TaskAdapter(HomeActivity.this, tarefasFiltradas, new TaskAdapter.OnTaskDeleteListener() {
                         @Override
                         public void onDeleteClick(Task task) {
@@ -156,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    // Método novo que vai no servidor, apaga e recarrega a lista
+    // Método que apaga e recarrega a lista
     private void deletarTarefa(Long taskId) {
         if (taskId == null) {
             Toast.makeText(this, "Erro: Tarefa sem ID", Toast.LENGTH_SHORT).show();

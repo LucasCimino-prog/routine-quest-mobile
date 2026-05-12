@@ -13,7 +13,7 @@ public class ApiClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create()) // O conversor de JSON
+                    .addConverterFactory(GsonConverterFactory.create()) // Conversor de JSON
                     .build();
         }
         return retrofit;

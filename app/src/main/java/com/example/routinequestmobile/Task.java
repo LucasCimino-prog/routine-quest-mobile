@@ -10,11 +10,11 @@ public class Task {
     private int durationMinutes;
     private String status;
 
-    // Construtor vazio (obrigatório para o Retrofit/GSON funcionar nos bastidores)
+    // Construtor vazio (obrigatório para o Retrofit/GSON funcionar)
     public Task() {
     }
 
-    // Construtor completo (o que estamos usando na tela de criar missão)
+    // Construtor completo
     public Task(String name, String description, int xpReward, String attributeType, int attributePoints, int durationMinutes) {
         this.name = name;
         this.description = description;

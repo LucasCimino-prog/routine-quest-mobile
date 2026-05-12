@@ -9,5 +9,4 @@ public class LoginRequest {
         this.password = password;
     }
 
-    // O Retrofit usa estes nomes para montar o JSON automaticamente
 }
