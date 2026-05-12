@@ -65,14 +65,14 @@
             android:id="@+id/rbIntelligence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inteligência 🧠"
+            android:text="Inteligência"
             android:layout_weight="1"/>
 
         <RadioButton
             android:id="@+id/rbAgility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Agilidade ⚡"
+            android:text="Agilidade"
             android:layout_weight="1"/>
     </RadioGroup>
 
