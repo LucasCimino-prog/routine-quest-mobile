@@ -3,30 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:background="#1A1A2E"
+    android:padding="20dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nova Missão"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp"/>
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="28dp"/>
 
     <EditText
         android:id="@+id/etTaskName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome da Missão (Ex: Fazer Flexões)"
+        android:layout_height="52dp"
+        android:hint="Nome da Missão"
+        android:textColor="#1A3A8F"
+        android:textColorHint="#5A7FD4"
+        android:background="@drawable/bg_input_arredondado"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:inputType="text"
+        android:singleLine="true"
         android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/etTaskDesc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:hint="Descrição do Treino"
+        android:textColor="#1A3A8F"
+        android:textColorHint="#5A7FD4"
+        android:background="@drawable/bg_input_arredondado"
+        android:padding="16dp"
+        android:gravity="top"
         android:inputType="textMultiLine"
         android:lines="3"
         android:layout_marginBottom="12dp"/>
@@ -34,56 +48,88 @@
     <EditText
         android:id="@+id/etTaskXp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Recompensa de XP (Ex: 50)"
+        android:layout_height="52dp"
+        android:hint="Recompensa de XP"
+        android:textColor="#1A3A8F"
+        android:textColorHint="#5A7FD4"
+        android:background="@drawable/bg_input_arredondado"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:inputType="number"
+        android:singleLine="true"
         android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/etTaskDuration"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Duração em Minutos (Ex: 15)"
+        android:layout_height="52dp"
+        android:hint="Duração em Minutos"
+        android:textColor="#1A3A8F"
+        android:textColorHint="#5A7FD4"
+        android:background="@drawable/bg_input_arredondado"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:inputType="number"
-        android:layout_marginBottom="16dp"/>
+        android:singleLine="true"
+        android:layout_marginBottom="22dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Qual atributo esta missão treina?"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
 
     <RadioGroup
         android:id="@+id/rgAttributes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="28dp">
 
         <RadioButton
             android:id="@+id/rbIntelligence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
             android:text="Inteligência"
-            android:layout_weight="1"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/bg_atributo_selector"/>
 
         <RadioButton
             android:id="@+id/rbAgility"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
             android:text="Agilidade"
-            android:layout_weight="1"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/bg_atributo_selector"/>
+
     </RadioGroup>
 
-    <Button
+    <TextView
         android:id="@+id/btnSaveTask"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:text="Salvar Missão"
-        android:textSize="18sp"
-        android:padding="12dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="@android:color/white"/>
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:background="@drawable/bg_botao_azul"
+        android:clickable="true"
+        android:focusable="true"/>
 
 </LinearLayout>

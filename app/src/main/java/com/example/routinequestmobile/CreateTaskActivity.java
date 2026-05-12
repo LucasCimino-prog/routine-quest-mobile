@@ -17,7 +17,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private EditText etTaskName, etTaskDesc, etTaskXp, etTaskDuration;
     private RadioGroup rgAttributes;
-    private Button btnSaveTask;
+    private TextView btnSaveTask;
 
     // Variável para saber se estamos editando (se for null, estamos criando)
     private Long taskEditId = null;
