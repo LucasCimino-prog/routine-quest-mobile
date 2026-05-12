@@ -35,7 +35,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Task currentTask = getItem(position);
 
         TextView tvTaskTitle = convertView.findViewById(R.id.tvTaskTitle);
-        Button btnDeleteTask = convertView.findViewById(R.id.btnDeleteTask);
+        TextView btnDeleteTask = convertView.findViewById(R.id.btnDeleteTask);
 
         // Preenche o texto com o nome e o XP
         if (currentTask != null) {

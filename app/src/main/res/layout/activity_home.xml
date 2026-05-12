@@ -1,29 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#1A1A2E"
+    android:padding="20dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Jornada Ativa"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="28dp"/>
 
-    <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_input_arredondado"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Buscar missão..."
+            android:textColorHint="#5A7FD4"
+            android:textColor="#1A3A8F"
+            android:background="@null"
+            android:inputType="text"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/btnSearch"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Buscar"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/bg_botao_azul"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/btnNewTask"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:text="Nova Missão ➕"
-        android:textSize="18sp"
-        android:padding="12dp"
-        android:backgroundTint="#2196F3"
-        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:background="@drawable/bg_botao_azul"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginBottom="24dp"/>
 
     <TextView
@@ -31,33 +74,15 @@
         android:layout_height="wrap_content"
         android:text="Minhas Missões Ativas:"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Buscar missão..."
-            android:inputType="text"/>
-
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Buscar"/>
-    </LinearLayout>
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
 
     <ListView
         android:id="@+id/lvTasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="12dp"/>
 
 </LinearLayout>

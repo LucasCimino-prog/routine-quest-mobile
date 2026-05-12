@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +29,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Encontra os itens no XML
-        Button btnNewTask = findViewById(R.id.btnNewTask);
+        TextView btnNewTask = findViewById(R.id.btnNewTask);
         lvTasks = findViewById(R.id.lvTasks);
 
         EditText etSearch = findViewById(R.id.etSearch);
-        Button btnSearch = findViewById(R.id.btnSearch);
+        TextView btnSearch = findViewById(R.id.btnSearch);
 
         btnNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
