@@ -1,62 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp"
-    android:background="#F5F5F5">
+    android:background="@drawable/bg_degrade_login"
+    android:padding="24dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Routine Quest"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginBottom="40dp"/>
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logobranca"
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="24dp"/>
 
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="50dp"
+        android:background="@drawable/bg_input_arredondado"
         android:hint="E-mail"
+        android:textColorHint="#1565C0"
+        android:textColor="#000000"
+        android:textAlignment="center"
         android:inputType="textEmailAddress"
-        android:background="#FFFFFF"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"
-        android:elevation="2dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="50dp"
+        android:background="@drawable/bg_input_arredondado"
         android:hint="Senha"
+        android:textColorHint="#1565C0"
+        android:textColor="#000000"
+        android:textAlignment="center"
         android:inputType="textPassword"
-        android:background="#FFFFFF"
-        android:padding="12dp"
-        android:layout_marginBottom="24dp"
-        android:elevation="2dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail"
+        android:layout_marginBottom="32dp"/>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="ENTRAR"
-        android:textSize="16sp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_botao_branco"
+        android:text="Entrar"
+        android:textColor="#1565C0"
         android:textStyle="bold"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="16dp"/>
+        android:elevation="8dp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <TextView
-        android:id="@+id/tvCreateAccount"
+        android:id="@+id/tvNoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ainda não tem conta? Crie uma jornada!"
-        android:textColor="#2196F3"
-        android:textSize="14sp"
+        android:text="Não possui login?"
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:padding="8dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="8dp"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_botao_branco"
+        android:text="Cadastrar"
+        android:textColor="#1565C0"
+        android:textStyle="bold"
+        android:elevation="4dp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
