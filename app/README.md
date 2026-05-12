@@ -22,3 +22,5 @@ Este é o módulo mobile do projeto **Routine Quest**, desenvolvido como Trabalh
 4. No arquivo `ApiClient.java`, ajuste o IP para o endereço da sua máquina local:
    ```java
    private static final String BASE_URL = "http://SEU_IP_AQUI:8080/";
+5. conecte um dispositivo android, de preferencia com um cabo usb. 
+6. rode o projeto.
