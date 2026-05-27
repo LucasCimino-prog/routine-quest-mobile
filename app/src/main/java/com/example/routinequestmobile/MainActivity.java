@@ -1,6 +1,7 @@
 package com.example.routinequestmobile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Lemos exatamente o mesmo arquivo "USER_PREFS" que salva no login
+        SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        String tokenSalvo = prefs.getString("token", null);
+
+        // Se o token existir, ele pula direto para a HomeActivity
+        if (tokenSalvo != null) {
+            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            finish(); // Mata a tela de login para não voltar pelo botão "voltar" do celular
+            return;   // Interrompe o onCreate aqui, economizando memória
+        }
+
+        // Se chegou até aqui (token é null), ele carrega a tela de login normalmente
         setContentView(R.layout.activity_main);
 
         etEmail = findViewById(R.id.etEmail);
@@ -49,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                             String tokenPuro = response.body().getToken();
                             Long userId = response.body().getUserId();
 
+                            // O SEU PASSO 1 JÁ ESTAVA AQUI E ESTÁ PERFEITO!
                             getSharedPreferences("USER_PREFS", MODE_PRIVATE)
                                     .edit()
                                     .putString("token", tokenPuro)
