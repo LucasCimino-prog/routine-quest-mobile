@@ -55,7 +55,13 @@
             android:textSize="15sp"
             android:layout_marginBottom="16dp"/>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="#5A7FD4"
+            app:hintEnabled="false"> <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -63,13 +69,68 @@
             android:inputType="textPassword"
             android:background="@drawable/bg_input_arredondado"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingEnd="48dp"
             android:textColor="#1A3A8F"
             android:textColorHint="#5A7FD4"
-            android:textSize="15sp"
-            android:layout_marginBottom="16dp"/>
+            android:textSize="15sp" />
 
-        <EditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/llPasswordRules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="10dp"
+            android:visibility="gone"> <TextView
+            android:id="@+id/tvRuleLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="• Mínimo de 8 caracteres"
+            android:textColor="#80FFFFFF"
+            android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvRuleUpper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Pelo menos 1 letra maiúscula"
+                android:textColor="#80FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvRuleLower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Pelo menos 1 letra minúscula"
+                android:textColor="#80FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvRuleNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Pelo menos 1 número"
+                android:textColor="#80FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvRuleSpecial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Pelo menos 1 símbolo (@#$%^&amp;+=!)"
+                android:textColor="#80FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="#5A7FD4"
+            app:hintEnabled="false"> <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etRegisterConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -77,11 +138,12 @@
             android:inputType="textPassword"
             android:background="@drawable/bg_input_arredondado"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingEnd="48dp"
             android:textColor="#1A3A8F"
             android:textColorHint="#5A7FD4"
-            android:textSize="15sp"
-            android:layout_marginBottom="28dp"/>
+            android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
