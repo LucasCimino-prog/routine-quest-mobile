@@ -6,17 +6,35 @@
     android:background="#1A1A2E"
     android:padding="20dp">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nova Missão"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="28dp"/>
+        android:layout_marginBottom="28dp">
 
+        <TextView
+            android:id="@+id/btnSairCriarMissao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Sair"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nova Missão"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
     <EditText
         android:id="@+id/etTaskName"
         android:layout_width="match_parent"
@@ -43,6 +61,21 @@
         android:gravity="top"
         android:inputType="textMultiLine"
         android:lines="3"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etTaskTime"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="Hora de Início (ex: 07:40)"
+        android:textColor="#1A3A8F"
+        android:textColorHint="#5A7FD4"
+        android:background="@drawable/bg_input_arredondado"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:focusable="false"
+        android:clickable="true"
+        android:drawableEnd="@android:drawable/ic_menu_recent_history"
         android:layout_marginBottom="12dp"/>
 
     <EditText

@@ -62,11 +62,37 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
         }
 
+        // Ação do botão de Sair
+        android.widget.TextView btnSair = findViewById(R.id.btnSairCriarMissao);
+        btnSair.setOnClickListener(v -> {
+            finish(); // Fecha a tela atual e volta para a Home
+        });
+
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 salvarOuAtualizarMissao();
             }
+        });
+
+        // CAMPO DE HORA DE INÍCIO (Abre o Relógio)
+        android.widget.EditText etTaskTime = findViewById(R.id.etTaskTime);
+
+        etTaskTime.setOnClickListener(v -> {
+            // Pega a hora atual do celular para o relógio já abrir nela
+            java.util.Calendar calendario = java.util.Calendar.getInstance();
+            int horaAtual = calendario.get(java.util.Calendar.HOUR_OF_DAY);
+            int minutoAtual = calendario.get(java.util.Calendar.MINUTE);
+
+            // Cria a janela do relógio
+            android.app.TimePickerDialog timePicker = new android.app.TimePickerDialog(CreateTaskActivity.this,
+                    (view, horaEscolhida, minutoEscolhido) -> {
+                        // Formata para garantir 2 dígitos (exemplo: 08:05 em vez de 8:5)
+                        String horaFormatada = String.format(java.util.Locale.getDefault(), "%02d:%02d", horaEscolhida, minutoEscolhido);
+                        etTaskTime.setText(horaFormatada);
+                    }, horaAtual, minutoAtual, true); // "true" significa que usa o formato 24h
+
+            timePicker.show();
         });
     }
 
@@ -132,5 +158,25 @@ public class CreateTaskActivity extends AppCompatActivity {
                 Toast.makeText(CreateTaskActivity.this, "Erro de conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    // MÉTODO PARA ESCONDER O TECLADO AO TOCAR FORA DAS CAIXAS DE TEXTO
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (ev.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+            android.view.View v = getCurrentFocus();
+            if (v instanceof android.widget.EditText) {
+                android.graphics.Rect outRect = new android.graphics.Rect();
+                v.getGlobalVisibleRect(outRect);
+                // Se o toque foi fora da caixa de texto
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    v.clearFocus(); // Tira a seleção do campo
+                    // Esconde o teclado
+                    android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

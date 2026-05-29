@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         android.view.ViewGroup navAttributes = findViewById(R.id.nav_attributes);
         android.view.ViewGroup navSettings = findViewById(R.id.nav_settings);
         android.widget.ImageView navAddTask = findViewById(R.id.nav_add_task);
+
         // Avisa que a Home é a tela atual, para ela ficar branca e maior
         navHome.post(() -> destacarAbaAtiva(navHome));
 
@@ -100,20 +101,10 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(HomeActivity.this, "Evolução e Atributos em breve!", Toast.LENGTH_SHORT).show();
         });
 
-        // 5. Configurações (Aplica o Logout)
+        // 5. Configurações (Abre a nova tela de Ajustes)
         navSettings.setOnClickListener(v -> {
-            // Apaga os dados salvos da sessão do usuário
-            SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
-            prefs.edit().clear().apply();
-
-            // Volta para a tela principal (Login)
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-
-            // Limpa o histórico de telas (impede que o botão de voltar retorne pra cá)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
+            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(intent);
-            finish(); // Encerra a Home
         });
     }
 
@@ -165,9 +156,9 @@ public class HomeActivity extends AppCompatActivity {
         Long userId = prefs.getLong("USER_ID", -1L); // Fixado por enquanto
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<Task>> call = apiService.searchTasks(userId, termoBusca);
+        Call<List<Task>> searchCall = apiService.searchTasks(userId, termoBusca);
 
-        call.enqueue(new Callback<List<Task>>() {
+        searchCall.enqueue(new Callback<List<Task>>() {
             @Override
             public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -207,9 +198,9 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<Void> call = apiService.deleteTask(taskId);
+        Call<Void> deleteCall = apiService.deleteTask(taskId);
 
-        call.enqueue(new Callback<Void>() {
+        deleteCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -234,40 +225,64 @@ public class HomeActivity extends AppCompatActivity {
         android.view.ViewGroup navAttributes = findViewById(R.id.nav_attributes);
         android.view.ViewGroup navSettings = findViewById(R.id.nav_settings);
 
-        // Coloca todas as abas numa lista genérica
         android.view.ViewGroup[] abas = {navHome, navCharacter, navAttributes, navSettings};
 
         for (android.view.ViewGroup aba : abas) {
-            // Pega no ícone e no texto
             android.widget.ImageView icone = (android.widget.ImageView) aba.getChildAt(0);
             android.widget.TextView texto = (android.widget.TextView) aba.getChildAt(1);
 
-            // Limpa filtros anteriores
             icone.clearColorFilter();
 
-            // O SEGREDO ESTÁ AQUI: Só aplica a tinta branca se a aba NÃO for a das Missões
-            if (aba != navHome) {
+            // 1. CORREÇÃO DE COR: Agora protege TANTO a logo de Missões QUANTO o ícone de Perfil!
+            if (aba != navHome && aba != navCharacter) {
                 icone.setColorFilter(android.graphics.Color.parseColor("#FFFFFF"), android.graphics.PorterDuff.Mode.SRC_ATOP);
             }
 
-            // O texto fica sempre branco
             texto.setTextColor(android.graphics.Color.parseColor("#FFFFFF"));
 
+            // Variável para sabermos se estamos lidando com as logos grandes ou ícones pequenos
+            boolean isLogoPersonalizada = (aba == navHome || aba == navCharacter);
+
             if (aba == abaAtiva) {
-                // ABA ATIVA: 100% visível, texto em negrito e ícone maior
+                // ESTADO ATIVO (Selecionado)
                 icone.setAlpha(1.0f);
                 texto.setAlpha(1.0f);
                 texto.setTypeface(null, android.graphics.Typeface.BOLD);
 
-                icone.animate().scaleX(1.35f).scaleY(1.35f).setDuration(300).start();
+                // O SEGREDO DO SUPER ZOOM: Se for logo, cresce para 1.45x (Gigante!). Se for ícone normal, 1.35x.
+                float zoomAtivo = isLogoPersonalizada ? 1.45f : 1.35f;
+                icone.animate().scaleX(zoomAtivo).scaleY(zoomAtivo).setDuration(300).start();
+
             } else {
-                // ABA INATIVA: 40% visível (dá o efeito apagado) e tamanho normal
+                // ESTADO INATIVO (Descanso)
                 icone.setAlpha(0.4f);
                 texto.setAlpha(0.4f);
                 texto.setTypeface(null, android.graphics.Typeface.NORMAL);
 
-                icone.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
+                // O SEGREDO DO TAMANHO PADRÃO: As logos inativas não voltam para 1.0x, elas param em 1.25x (que é o tamanho que você gostou). Os ícones pequenos voltam para 1.0x.
+                float zoomInativo = isLogoPersonalizada ? 1.25f : 1.0f;
+                icone.animate().scaleX(zoomInativo).scaleY(zoomInativo).setDuration(300).start();
             }
         }
+    }
+
+    // MÉTODO PARA ESCONDER O TECLADO AO TOCAR FORA DAS CAIXAS DE TEXTO
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (ev.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+            android.view.View v = getCurrentFocus();
+            if (v instanceof android.widget.EditText) {
+                android.graphics.Rect outRect = new android.graphics.Rect();
+                v.getGlobalVisibleRect(outRect);
+                // Se o toque foi fora da caixa de texto
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    v.clearFocus(); // Tira a seleção do campo
+                    // Esconde o teclado
+                    android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
