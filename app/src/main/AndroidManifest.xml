@@ -23,6 +23,8 @@
         <activity
             android:name=".SettingsActivity" />
         <activity
+            android:name=".FocusActivity" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

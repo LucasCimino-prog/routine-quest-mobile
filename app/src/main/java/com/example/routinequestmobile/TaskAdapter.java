@@ -2,86 +2,137 @@ package com.example.routinequestmobile;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 import java.util.List;
 
 public class TaskAdapter extends ArrayAdapter<Task> {
 
-    // Criamos um "ouvinte" para avisar a HomeActivity quando o botão for clicado
     private OnTaskDeleteListener deleteListener;
+    private OnTaskCompleteListener completeListener;
 
     public interface OnTaskDeleteListener {
         void onDeleteClick(Task task);
     }
 
-    public TaskAdapter(Context context, List<Task> tasks, OnTaskDeleteListener listener) {
+    public interface OnTaskCompleteListener {
+        void onComplete(Task task);
+    }
+
+    public TaskAdapter(Context context, List<Task> tasks, OnTaskDeleteListener deleteListener, OnTaskCompleteListener completeListener) {
         super(context, 0, tasks);
-        this.deleteListener = listener;
+        this.deleteListener = deleteListener;
+        this.completeListener = completeListener;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Carrega o nosso layout item_task.xml
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_task, parent, false);
         }
 
-        // Pega a tarefa atual da lista
         Task currentTask = getItem(position);
 
         TextView tvTaskTitle = convertView.findViewById(R.id.tvTaskTitle);
-        TextView btnDeleteTask = convertView.findViewById(R.id.btnDeleteTask);
+        TextView botaoDeleteTask = convertView.findViewById(R.id.botaoDeleteTask);
 
-        // Preenche o texto com o nome e o XP
+        View botaoHoldToComplete = convertView.findViewById(R.id.botaoHoldToComplete);
+        View viewFill = convertView.findViewById(R.id.viewFill);
+
+        // As 3 Estrelas Simétricas
+        ImageView ivStarSmokeLeft = convertView.findViewById(R.id.ivStarSmokeLeft);
+        ImageView ivStarSmokeCenter = convertView.findViewById(R.id.ivStarSmokeCenter);
+        ImageView ivStarSmokeRight = convertView.findViewById(R.id.ivStarSmokeRight);
+
         if (currentTask != null) {
             tvTaskTitle.setText(currentTask.getName() + " (+ " + currentTask.getXpReward() + " XP)");
 
-            // O que acontece ao clicar no "X"
-            btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+            viewFill.setScaleY(0f);
+
+            ImageView[] stars = {ivStarSmokeLeft, ivStarSmokeCenter, ivStarSmokeRight};
+            for (ImageView star : stars) {
+                star.setAlpha(0f);
+                star.setTranslationY(0f);
+                star.setTranslationX(0f);
+                star.setRotation(0f);
+            }
+
+            botaoDeleteTask.setOnClickListener(v -> {
+                android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(v.getContext())
+                        .setTitle("Abandonar Missão?")
+                        .setMessage("Tem certeza que deseja excluir esta tarefa? Você não receberá XP por ela.")
+                        .setPositiveButton("Sim, Excluir", (dialogInterface, which) -> deleteListener.onDeleteClick(currentTask))
+                        .setNegativeButton("Cancelar", (dialogInterface, which) -> dialogInterface.dismiss())
+                        .create();
+
+                dialog.show();
+                dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setTextColor(android.graphics.Color.parseColor("#E53935"));
+                dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(android.graphics.Color.parseColor("#5A7FD4"));
+            });
+
+            // ========================================================
+            // BOTÃO DE CONCLUIR + EXPLOSÃO SIMÉTRICA
+            // ========================================================
+            botaoHoldToComplete.setOnTouchListener(new View.OnTouchListener() {
+                private boolean isFilling = false;
+
                 @Override
-                public void onClick(View v) {
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            isFilling = true;
+                            viewFill.animate()
+                                    .scaleY(1f)
+                                    .setDuration(1000)
+                                    .withEndAction(() -> {
+                                        isFilling = false;
 
-                    // 1. Cria a caixa de diálogo, mas guarda ela numa variável em vez de mostrar na hora
-                    android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(v.getContext())
-                            .setTitle("Abandonar Missão?")
-                            .setMessage("Tem certeza que deseja excluir esta tarefa? Você não receberá XP por ela.")
+                                        // As estrelas aparecem prontas para voar
+                                        for (ImageView star : stars) {
+                                            star.setAlpha(1f);
+                                            star.setTranslationY(0f);
+                                            star.setTranslationX(0f);
+                                        }
 
-                            .setPositiveButton("Sim, Excluir", new android.content.DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(android.content.DialogInterface dialogInterface, int which) {
-                                    deleteListener.onDeleteClick(currentTask);
-                                }
-                            })
+                                        // Estrela Esquerda: sobe e abre para a esquerda rodando
+                                        ivStarSmokeLeft.animate()
+                                                .translationY(-160f).translationX(-50f).rotation(-45f).alpha(0f)
+                                                .setDuration(600).start();
 
-                            .setNegativeButton("Cancelar", new android.content.DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(android.content.DialogInterface dialogInterface, int which) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .create(); // Cria o alerta em vez de mostrar direto
+                                        // Estrela Centro: sobe muito alto e reto
+                                        ivStarSmokeCenter.animate()
+                                                .translationY(-220f).alpha(0f)
+                                                .setDuration(700).start();
 
-                    // 2. Exibe o alerta na tela primeiro
-                    dialog.show();
+                                        // Estrela Direita: sobe e abre para a direita rodando
+                                        ivStarSmokeRight.animate()
+                                                .translationY(-160f).translationX(50f).rotation(45f).alpha(0f)
+                                                .setDuration(600)
+                                                .withEndAction(() -> {
+                                                    completeListener.onComplete(currentTask);
+                                                }).start();
 
-                    // Botão Positivo (Sim, Excluir) -> Vermelho
-                    dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-                            .setTextColor(android.graphics.Color.parseColor("#E53935"));
+                                    }).start();
+                            return true;
 
-                    // Botão Negativo (Cancelar) -> Azul
-                    dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)
-                            .setTextColor(android.graphics.Color.parseColor("#5A7FD4"));
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            if (isFilling) {
+                                viewFill.animate().cancel();
+                                viewFill.animate().scaleY(0f).setDuration(200).start();
+                                isFilling = false;
+                            }
+                            return true;
+                    }
+                    return false;
                 }
             });
         }
-
         return convertView;
     }
 }

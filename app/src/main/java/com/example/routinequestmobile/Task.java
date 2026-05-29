@@ -9,6 +9,8 @@ public class Task {
     private int attributePoints;
     private int durationMinutes;
     private String status;
+    private String startTime;
+    private boolean ativo;
 
     // Construtor vazio (obrigatório para o Retrofit/GSON funcionar)
     public Task() {
@@ -45,6 +47,14 @@ public class Task {
     public int getDurationMinutes() { return durationMinutes; }
     public void setDurationMinutes(int durationMinutes) { this.durationMinutes = durationMinutes; }
     public String getStatus() { return status; }
+
+    public String getStartTime() { return startTime; }
+
+    public void setStartTime(String startTime) { this.startTime = startTime; }
+
+    public boolean isAtivo() { return ativo; }
+
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
 
     public void setStatus(String status) { this.status = status; }
 }

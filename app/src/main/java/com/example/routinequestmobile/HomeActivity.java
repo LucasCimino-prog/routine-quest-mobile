@@ -128,14 +128,38 @@ public class HomeActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Task> listaDeTarefas = response.body();
 
-                    // USA O NOSSO NOVO ADAPTADOR!
-                    TaskAdapter adapter = new TaskAdapter(HomeActivity.this, listaDeTarefas, new TaskAdapter.OnTaskDeleteListener() {
-                        @Override
-                        public void onDeleteClick(Task task) {
-                            // Quando clicar no X, chama o método de deletar passando o ID
-                            deletarTarefa(task.getId());
-                        }
-                    });
+                    // USA O NOVO ADAPTADOR!
+                    TaskAdapter adapter = new TaskAdapter(HomeActivity.this, listaDeTarefas,
+                            // O que faz ao clicar em Deletar
+                            new TaskAdapter.OnTaskDeleteListener() {
+                                @Override
+                                public void onDeleteClick(Task task) {
+                                    deletarTarefa(task.getId());
+                                }
+                            },
+                            // O que faz quando a BARRA ENCHE
+                            new TaskAdapter.OnTaskCompleteListener() {
+                                @Override
+                                public void onComplete(Task task) {
+
+                                    // Chama o Retrofit para avisar o Spring Boot
+                                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                                    apiService.completeTask(task.getId()).enqueue(new Callback<Task>() {
+                                        @Override
+                                        public void onResponse(Call<Task> call, Response<Task> response) {
+                                            if (response.isSuccessful() && response.body() != null) {
+                                                Task finalizada = response.body();
+                                                Toast.makeText(HomeActivity.this, "⚔️ Missão Cumprida!\n+" + finalizada.getXpReward() + " XP", Toast.LENGTH_LONG).show();
+                                                carregarTarefas(); // Recarrega a lista
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Task> call, Throwable t) {
+                                            Toast.makeText(HomeActivity.this, "Erro de conexão.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
 
                     lvTasks.setAdapter(adapter);
 
@@ -168,13 +192,34 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Nenhuma missão encontrada.", Toast.LENGTH_SHORT).show();
                     }
 
-                    // Reutilizamos o adaptador que já foi criado antes!
-                    TaskAdapter adapter = new TaskAdapter(HomeActivity.this, tarefasFiltradas, new TaskAdapter.OnTaskDeleteListener() {
-                        @Override
-                        public void onDeleteClick(Task task) {
-                            deletarTarefa(task.getId());
-                        }
-                    });
+                    // ADAPTADOR DA BUSCA (Agora com as duas ações: Deletar e Concluir)
+                    TaskAdapter adapter = new TaskAdapter(HomeActivity.this, tarefasFiltradas,
+                            new TaskAdapter.OnTaskDeleteListener() {
+                                @Override
+                                public void onDeleteClick(Task task) {
+                                    deletarTarefa(task.getId());
+                                }
+                            },
+                            new TaskAdapter.OnTaskCompleteListener() {
+                                @Override
+                                public void onComplete(Task task) {
+                                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                                    apiService.completeTask(task.getId()).enqueue(new Callback<Task>() {
+                                        @Override
+                                        public void onResponse(Call<Task> call, Response<Task> response) {
+                                            if (response.isSuccessful() && response.body() != null) {
+                                                Task finalizada = response.body();
+                                                Toast.makeText(HomeActivity.this, "⚔️ Missão Cumprida!\n+" + finalizada.getXpReward() + " XP", Toast.LENGTH_LONG).show();
+                                                carregarTarefas(); // Recarrega a lista
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Task> call, Throwable t) {
+                                            Toast.makeText(HomeActivity.this, "Erro de conexão.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
 
                     lvTasks.setAdapter(adapter);
 
@@ -249,7 +294,7 @@ public class HomeActivity extends AppCompatActivity {
                 texto.setAlpha(1.0f);
                 texto.setTypeface(null, android.graphics.Typeface.BOLD);
 
-                // O SEGREDO DO SUPER ZOOM: Se for logo, cresce para 1.45x (Gigante!). Se for ícone normal, 1.35x.
+                //SUPER ZOOM: Se for logo, cresce para 1.45x (Gigante!). Se for ícone normal, 1.35x.
                 float zoomAtivo = isLogoPersonalizada ? 1.45f : 1.35f;
                 icone.animate().scaleX(zoomAtivo).scaleY(zoomAtivo).setDuration(300).start();
 
@@ -259,7 +304,7 @@ public class HomeActivity extends AppCompatActivity {
                 texto.setAlpha(0.4f);
                 texto.setTypeface(null, android.graphics.Typeface.NORMAL);
 
-                // O SEGREDO DO TAMANHO PADRÃO: As logos inativas não voltam para 1.0x, elas param em 1.25x (que é o tamanho que você gostou). Os ícones pequenos voltam para 1.0x.
+                //TAMANHO PADRÃO: As logos inativas não voltam para 1.0x, elas param em 1.25x (que é o tamanho que você gostou). Os ícones pequenos voltam para 1.0x.
                 float zoomInativo = isLogoPersonalizada ? 1.25f : 1.0f;
                 icone.animate().scaleX(zoomInativo).scaleY(zoomInativo).setDuration(300).start();
             }
