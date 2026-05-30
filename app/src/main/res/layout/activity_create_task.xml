@@ -3,165 +3,265 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1A1A2E"
-    android:padding="20dp">
+    android:background="@color/background_dark"
+    android:padding="24dp">
 
+    <!-- HEADER: Título e Botão Fechar -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="28dp">
+        android:layout_marginBottom="32dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FORJAR NOVA MISSÃO"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:fontFamily="serif"
+            android:layout_centerVertical="true"
+            android:drawablePadding="12dp"/>
+
+        <!-- Botão de Fechar (X) -->
         <TextView
             android:id="@+id/btnSairCriarMissao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="← Sair"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:text="✕"
+            android:textColor="@color/text_hint"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@drawable/bg_input_arredondado"
+            android:layout_alignParentEnd="true"
             android:clickable="true"
             android:focusable="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nova Missão"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_centerInParent="true"/>
     </RelativeLayout>
+
+    <!-- NOME DA MISSÃO -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MISSÃO"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp"/>
+
     <EditText
         android:id="@+id/etTaskName"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:hint="Nome da Missão"
-        android:textColor="#1A3A8F"
-        android:textColorHint="#5A7FD4"
+        android:hint="Ex.: Beber 2L de água"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_hint"
         android:background="@drawable/bg_input_arredondado"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:inputType="text"
         android:singleLine="true"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <EditText
-        android:id="@+id/etTaskDesc"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:hint="Descrição do Treino"
-        android:textColor="#1A3A8F"
-        android:textColorHint="#5A7FD4"
-        android:background="@drawable/bg_input_arredondado"
-        android:padding="16dp"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:layout_marginBottom="12dp"/>
-
-    <EditText
-        android:id="@+id/etTaskTime"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:hint="Hora de Início (ex: 07:40)"
-        android:textColor="#1A3A8F"
-        android:textColorHint="#5A7FD4"
-        android:background="@drawable/bg_input_arredondado"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:focusable="false"
-        android:clickable="true"
-        android:drawableEnd="@android:drawable/ic_menu_recent_history"
-        android:layout_marginBottom="12dp"/>
-
-    <EditText
-        android:id="@+id/etTaskXp"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:hint="Recompensa de XP"
-        android:textColor="#1A3A8F"
-        android:textColorHint="#5A7FD4"
-        android:background="@drawable/bg_input_arredondado"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:inputType="number"
-        android:singleLine="true"
-        android:layout_marginBottom="12dp"/>
-
-    <EditText
-        android:id="@+id/etTaskDuration"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:hint="Duração em Minutos"
-        android:textColor="#1A3A8F"
-        android:textColorHint="#5A7FD4"
-        android:background="@drawable/bg_input_arredondado"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:inputType="number"
-        android:singleLine="true"
-        android:layout_marginBottom="22dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Qual atributo esta missão treina?"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginBottom="12dp"/>
-
-    <RadioGroup
-        android:id="@+id/rgAttributes"
+    <!-- BLOCO LADO A LADO: HORÁRIO E XP -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="28dp">
+        android:baselineAligned="false"
+        android:layout_marginBottom="20dp">
+
+        <!-- HORÁRIO -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HORÁRIO"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etTaskTime"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="12:00"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:background="@drawable/bg_input_arredondado"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:drawableEnd="@android:drawable/ic_menu_recent_history"/>
+        </LinearLayout>
+
+        <!-- XP -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RECOMPENSA (XP)"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etTaskXp"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Ex: 50"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:background="@drawable/bg_input_arredondado"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:inputType="number"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- DESCRIÇÃO E DURAÇÃO (Ocultos no protótipo, mas necessários para a sua API) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <EditText
+            android:id="@+id/etTaskDuration"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:hint="Duração (min)"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:background="@drawable/bg_input_arredondado"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:inputType="number"
+            android:singleLine="true"/>
+
+        <EditText
+            android:id="@+id/etTaskDesc"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1.5"
+            android:layout_marginStart="8dp"
+            android:hint="Descrição breve..."
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:background="@drawable/bg_input_arredondado"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:inputType="text"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+    <!-- ATRIBUTO TREINADO -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ATRIBUTO TREINADO"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Os 4 Atributos Quadrados -->
+    <RadioGroup
+        android:id="@+id/rgAttributes"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
 
         <RadioButton
             android:id="@+id/rbIntelligence"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:text="Inteligência"
+            android:text="INT"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:gravity="center"
             android:button="@null"
-            android:background="@drawable/bg_atributo_selector"/>
+            android:background="@drawable/bg_atributo_selector"
+            android:layout_marginEnd="4dp"/>
+
+        <RadioButton
+            android:id="@+id/rbStrength"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="FOR"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/bg_atributo_selector"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"/>
 
         <RadioButton
             android:id="@+id/rbAgility"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:text="Agilidade"
+            android:text="AGI"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:gravity="center"
             android:button="@null"
-            android:background="@drawable/bg_atributo_selector"/>
+            android:background="@drawable/bg_atributo_selector"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"/>
 
+        <RadioButton
+            android:id="@+id/rbResistance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="RES"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/bg_atributo_selector"
+            android:layout_marginStart="4dp"/>
     </RadioGroup>
 
+    <!-- Espaço flexível para empurrar o botão final para baixo -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- BOTÃO ADICIONAR -->
     <TextView
         android:id="@+id/btnSaveTask"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="Salvar Missão"
-        android:textSize="15sp"
+        android:layout_height="55dp"
+        android:text="ADICIONAR À JORNADA"
+        android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:gravity="center"
-        android:background="@drawable/bg_botao_azul"
+        android:background="@drawable/bg_botao_primario"
         android:clickable="true"
         android:focusable="true"/>
 

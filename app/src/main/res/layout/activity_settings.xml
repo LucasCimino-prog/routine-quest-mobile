@@ -1,180 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A2E">
+    android:background="@color/background_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:layout_alignParentTop="true">
+        android:paddingTop="24dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginBottom="75dp">
+
+        <!-- CABEÇALHO DA CÂMARA -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CÂMARA"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:layout_marginBottom="4dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Configurações"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:text="Pactos, conta e integrações"
+            android:textSize="14sp"
+            android:textColor="@color/text_hint"
             android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="32dp"/>
 
-        <Button
-            android:id="@+id/btnLogout"
+        <!-- CARD DO STRAVA (Para o seu TCC) -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="Sair da Conta (Logout)"
-            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_missao_pergaminho"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PACTO COM STRAVA"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aguardando sincronização de treinos..."
+                android:textSize="12sp"
+                android:textColor="@color/text_hint"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Botão de Sair/Romper Pacto antigo -->
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="ROMPER PACTO (SAIR)"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
+                android:background="@drawable/bg_botao_excluir"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- OPÇÕES DO AVENTUREIRO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Conta do aventureiro"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="#E53935" />
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_card_light" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notificações"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_card_light" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Routine Quest Tomo - v1.0"
+            android:textSize="16sp"
+            android:textColor="@color/text_hint"
+            android:paddingVertical="12dp"/>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/navbar_container"
+    <!-- NAVBAR MODULAR -->
+    <include
+        android:id="@+id/nav_bar"
+        layout="@layout/nav_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:clipChildren="false"
-        android:clipToPadding="false">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_alignParentBottom="true"
-            android:background="#1A1A2E"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <RelativeLayout
-                android:id="@+id/nav_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="12dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logoquest" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Missões"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="14dp"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/nav_character"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="12dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/iconeperfil" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Personagem"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="14dp"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2" />
-
-            <LinearLayout
-                android:id="@+id/nav_attributes"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_grafico_atributos"
-                    app:tint="#80FFFFFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Atributos"
-                    android:textColor="#80FFFFFF"
-                    android:textSize="10sp"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/nav_settings"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_settings"
-                    app:tint="#80FFFFFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Configurações"
-                    android:textColor="#80FFFFFF"
-                    android:textSize="10sp"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/nav_add_task"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_octagon_add"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:translationY="-40dp"
-            android:elevation="10dp"
-            android:clickable="true"
-            android:focusable="true" />
-    </RelativeLayout>
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

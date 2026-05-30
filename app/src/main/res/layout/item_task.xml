@@ -1,103 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="14dp"
+    android:orientation="vertical"
     android:clipChildren="false"
     android:clipToPadding="false">
 
     <LinearLayout
+        android:id="@+id/layoutPeriodHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        android:background="@drawable/bg_missao_arredondada"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp"
+            android:background="#3D2A5E" />
+
+        <TextView
+            android:id="@+id/tvPeriodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="☆  AURORA"
+            android:textColor="#E6C57A"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            android:layout_marginHorizontal="12dp" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp"
+            android:background="#3D2A5E" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_missao_pergaminho"
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <TextView
-            android:id="@+id/tvTaskTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:text="Nome da Tarefa (+ 50 XP)"/>
+        <View
+            android:id="@+id/viewAttributeColor"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/viewAttributeColor"
+            android:layout_toStartOf="@id/divisorVertical"
+            android:paddingStart="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/ivStarSmokeLeft"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_estrela_xp"
-                android:alpha="0" />
-
-            <ImageView
-                android:id="@+id/ivStarSmokeCenter"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_estrela_xp"
-                android:alpha="0" />
-
-            <ImageView
-                android:id="@+id/ivStarSmokeRight"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_estrela_xp"
-                android:alpha="0" />
-
-            <FrameLayout
-                android:id="@+id/botaoHoldToComplete"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_botao_concluir"
-                android:clipToOutline="true"
-                android:clickable="true"
-                android:focusable="true">
-
-                <View
-                    android:id="@+id/viewFill"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#FFD700"
-                    android:scaleY="0"
-                    android:transformPivotY="45dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp">
 
                 <TextView
+                    android:id="@+id/tvTaskTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="✓"
-                    android:textSize="20sp"
-                    android:textColor="#FFFFFF"
+                    android:text="🕒 21:00"
+                    android:textSize="12sp"
+                    android:textColor="#9E8BB3"
+                    android:background="@drawable/bg_tempo_missao"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTaskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alongamento"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:fontFamily="serif"
+                android:layout_marginBottom="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTaskXp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="☆ +10 XP"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:elevation="2dp"/>
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvTaskAttr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="① +1 AGI"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divisorVertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/containerBotoes"
+            android:layout_marginVertical="1dp"
+            android:background="#3D2A5E" />
+
+        <RelativeLayout
+            android:id="@+id/containerBotoes"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/botaoDeleteTask"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:text="🗑"
+                android:textSize="14sp"
+                android:textColor="#9E8BB3"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <FrameLayout
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <ImageView android:id="@+id/ivStarSmokeLeft" android:layout_width="16dp" android:layout_height="16dp" android:layout_gravity="center" android:src="@drawable/ic_estrela_xp" android:alpha="0" />
+                <ImageView android:id="@+id/ivStarSmokeCenter" android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:src="@drawable/ic_estrela_xp" android:alpha="0" />
+                <ImageView android:id="@+id/ivStarSmokeRight" android:layout_width="16dp" android:layout_height="16dp" android:layout_gravity="center" android:src="@drawable/ic_estrela_xp" android:alpha="0" />
+
+                <FrameLayout
+                    android:id="@+id/botaoHoldToComplete"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_octogono_escuro"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/viewFill"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/bg_octogono_animado" />
+
+                    <TextView
+                        android:id="@+id/tvCheckMark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="✓"
+                        android:textSize="22sp"
+                        android:textColor="#9E8BB3"
+                        android:textStyle="bold"/>
+                </FrameLayout>
             </FrameLayout>
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/botaoDeleteTask"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:text="✕"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:background="@drawable/bg_botao_excluir"
-            android:clickable="true"
-            android:focusable="true"/>
-    </LinearLayout>
-
-</RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

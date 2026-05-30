@@ -1,9 +1,17 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.RoutineQuestMobile" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+<resources xmlns:tools="http://schemas.android.com/apk/res/android">
+    <style name="Theme.RoutineQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-    <style name="Theme.RoutineQuestMobile" parent="Base.Theme.RoutineQuestMobile" />
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+
+        <item name="android:statusBarColor">@color/background_dark</item>
+
+        <item name="android:fontFamily">serif</item>
+
+    </style>
 </resources>
