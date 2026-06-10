@@ -87,9 +87,10 @@ public class HomeActivity extends AppCompatActivity {
         navAddTask.setOnClickListener(v ->
                 startActivity(new Intent(HomeActivity.this, CreateTaskActivity.class)));
 
-        navAttributes.setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this, "Evolução e Atributos em breve!", Toast.LENGTH_SHORT).show());
-
+        navAttributes.setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, AttributesActivity.class));
+            finish();
+        });
         navSettings.setOnClickListener(v ->
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class)));
     }

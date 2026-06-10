@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_missao_pergaminho"
+    android:paddingHorizontal="20dp">
+
+    <TextView
+        android:id="@+id/tvCronicaIcone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="☆"
+        android:textColor="#E6C57A"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/tvCronicaTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Título da Missão"
+        android:textColor="#FFF"
+        android:layout_toEndOf="@id/tvCronicaIcone"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="60dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:fontFamily="serif"/>
+
+    <TextView
+        android:id="@+id/tvCronicaRecompensa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+1 INT"
+        android:textColor="#A970FF"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

@@ -61,8 +61,10 @@ public class SettingsActivity extends AppCompatActivity {
         navAddTask.setOnClickListener(v ->
                 startActivity(new Intent(SettingsActivity.this, CreateTaskActivity.class)));
 
-        navAttributes.setOnClickListener(v ->
-                Toast.makeText(this, "Evolução e Atributos em breve!", Toast.LENGTH_SHORT).show());
+        navAttributes.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, AttributesActivity.class));
+            finish();
+        });
 
         navSettings.setOnClickListener(v ->
                 Toast.makeText(this, "Você já está na Câmara!", Toast.LENGTH_SHORT).show());

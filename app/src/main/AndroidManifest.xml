@@ -27,6 +27,8 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+        <activity android:name=".AttributesActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
