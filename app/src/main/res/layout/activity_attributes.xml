@@ -100,6 +100,13 @@
                         android:src="@drawable/ic_octogono_escuro"
                         android:layout_centerInParent="true"
                         android:alpha="0.5"/>
+
+                    <com.example.routinequestmobile.RadarChartView
+                        android:id="@+id/radarChart"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_centerInParent="true" />
+
                 </RelativeLayout>
 
                 <LinearLayout
@@ -110,14 +117,29 @@
                     android:layout_marginTop="16dp"
                     android:paddingBottom="8dp">
 
-                    <TextView android:id="@+id/tvIntTotal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Ψ 0" android:textColor="#E6C57A" android:gravity="center" android:textSize="14sp" android:textStyle="bold"/>
-                    <TextView android:id="@+id/tvForTotal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="⧟ 0" android:textColor="#E6C57A" android:gravity="center" android:textSize="14sp" android:textStyle="bold"/>
-                    <TextView android:id="@+id/tvAgiTotal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="ϟ 0" android:textColor="#E6C57A" android:gravity="center" android:textSize="14sp" android:textStyle="bold"/>
-                    <TextView android:id="@+id/tvResTotal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="⛨ 0" android:textColor="#E6C57A" android:gravity="center" android:textSize="14sp" android:textStyle="bold"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvIntTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ψ 0" android:textColor="#E6C57A" android:textSize="14sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="INT" android:textColor="#9E8BB3" android:textSize="10sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvForTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⧟ 0" android:textColor="#E6C57A" android:textSize="14sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="FOR" android:textColor="#9E8BB3" android:textSize="10sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvAgiTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ϟ 0" android:textColor="#E6C57A" android:textSize="14sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AGI" android:textColor="#9E8BB3" android:textSize="10sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvResTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ω 0" android:textColor="#E6C57A" android:textSize="14sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RES" android:textColor="#9E8BB3" android:textSize="10sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- DIVISÓRIA CRÔNICAS RECENTES -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,7 +160,6 @@
                 <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="#3D2A5E" />
             </LinearLayout>
 
-            <!-- AQUI É ONDE A MÁGICA VAI ACONTECER -->
             <LinearLayout
                 android:id="@+id/containerCronicas"
                 android:layout_width="match_parent"

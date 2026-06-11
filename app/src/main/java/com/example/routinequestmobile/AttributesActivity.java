@@ -30,30 +30,75 @@ public class AttributesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attributes);
 
         containerCronicas = findViewById(R.id.containerCronicas);
-
-        // Inicializa a animação e os cliques da barra inferior
         configurarNavbar();
-
-        // Carrega as missões concluídas dinamicamente
-        carregarCronicasRecentes();
-
-        // [FUTURO] Aqui vamos mapear os textos (tvIntTotal, etc.)
-        // para atualizar com os dados do banco de dados para os cálculos totais
     }
 
-    private void carregarCronicasRecentes() {
-        // Resgata o ID do utilizador logado da mesma forma que na HomeActivity
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Toda a vez que a aba de atributos for aberta, ele vai no MySQL e atualiza a tela
+        carregarCronicasRecentes();
+        carregarTotaisAtributos();
+    }
+
+    private void carregarTotaisAtributos() {
         SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
         Long userId = prefs.getLong("USER_ID", -1L);
 
         if (userId == -1L) {
-            Toast.makeText(this, "Erro: Utilizador não identificado.", Toast.LENGTH_SHORT).show();
+            android.util.Log.e("RPG_DEBUG", "ERRO: O celular não sabe quem está logado (ID = -1)");
             return;
         }
 
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        android.util.Log.e("RPG_DEBUG", "Buscando atributos no banco para o User ID: " + userId);
 
-        // Faz a chamada passando o ID correto do utilizador
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getUserStats(userId).enqueue(new Callback<UserStats>() {
+            @Override
+            public void onResponse(Call<UserStats> call, Response<UserStats> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    UserStats stats = response.body();
+
+                    android.util.Log.e("RPG_DEBUG", "Dados recebidos -> INT: " + stats.getIntelligence() + " | FOR: " + stats.getStrength());
+
+                    TextView tvInt = findViewById(R.id.tvIntTotal);
+                    TextView tvFor = findViewById(R.id.tvForTotal);
+                    TextView tvAgi = findViewById(R.id.tvAgiTotal);
+                    TextView tvRes = findViewById(R.id.tvResTotal);
+
+                    tvInt.setText("Ψ " + stats.getIntelligence());
+                    tvFor.setText("⧟ " + stats.getStrength());
+                    tvAgi.setText("ϟ " + stats.getAgility());
+                    tvRes.setText("Ω " + stats.getResistance());
+
+                    RadarChartView radar = findViewById(R.id.radarChart);
+                    if (radar != null) {
+                        radar.setStats(
+                                stats.getIntelligence(),
+                                stats.getStrength(),
+                                stats.getAgility(),
+                                stats.getResistance()
+                        );
+                    } // <--- ESTA ERA A CHAVETA QUE ESTAVA A FALTAR!
+                } else {
+                    android.util.Log.e("RPG_DEBUG", "Erro na API. Código: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserStats> call, Throwable t) {
+                android.util.Log.e("RPG_DEBUG", "A API não respondeu: " + t.getMessage());
+            }
+        });
+    }
+
+    private void carregarCronicasRecentes() {
+        SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        Long userId = prefs.getLong("USER_ID", -1L);
+
+        if (userId == -1L) return;
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<List<Task>> call = apiService.getUserTasks(userId);
 
         call.enqueue(new Callback<List<Task>>() {
@@ -63,52 +108,41 @@ public class AttributesActivity extends AppCompatActivity {
                     List<Task> todasMissoes = response.body();
                     List<Task> missoesConcluidas = new ArrayList<>();
 
-                    // 1. Filtra apenas as missões com status COMPLETED
                     for (Task task : todasMissoes) {
                         if ("COMPLETED".equals(task.getStatus())) {
                             missoesConcluidas.add(task);
                         }
                     }
 
-                    // 2. Inverte a lista para que as mais recentes fiquem no topo
                     Collections.reverse(missoesConcluidas);
-
-                    // 3. Pega no máximo as 4 últimas
                     int limite = Math.min(missoesConcluidas.size(), 4);
-
-                    containerCronicas.removeAllViews(); // Limpa o contentor por segurança
+                    containerCronicas.removeAllViews();
 
                     for (int i = 0; i < limite; i++) {
                         adicionarCronicaNaTela(missoesConcluidas.get(i));
                     }
-                } else {
-                    Toast.makeText(AttributesActivity.this, "Erro ao carregar crônicas.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Task>> call, Throwable t) {
-                Toast.makeText(AttributesActivity.this, "Erro de conexão ao buscar crônicas.", Toast.LENGTH_SHORT).show();
+                // Erro silencioso tratado na outra chamada
             }
         });
     }
 
     private void adicionarCronicaNaTela(Task task) {
-        // Infla (desenha) o nosso item_cronica.xml
         View viewCronica = LayoutInflater.from(this).inflate(R.layout.item_cronica, containerCronicas, false);
 
         TextView tvIcone = viewCronica.findViewById(R.id.tvCronicaIcone);
         TextView tvTitulo = viewCronica.findViewById(R.id.tvCronicaTitulo);
         TextView tvRecompensa = viewCronica.findViewById(R.id.tvCronicaRecompensa);
 
-        // Define o título da missão
         tvTitulo.setText(task.getName() != null ? task.getName() : "Missão Misteriosa");
 
-        // FIX: Define a cor do ícone e da recompensa SEMPRE para amarelo (#FFB300)
         tvIcone.setTextColor(Color.parseColor("#FFB300"));
         tvRecompensa.setTextColor(Color.parseColor("#FFB300"));
 
-        // O switch agora serve APENAS para definir qual texto/símbolo vai aparecer
         String atributo = task.getAttributeType();
         if (atributo == null) atributo = "UNKNOWN";
 
@@ -126,7 +160,7 @@ public class AttributesActivity extends AppCompatActivity {
                 tvRecompensa.setText("+1 AGI");
                 break;
             case "RESISTANCE":
-                tvIcone.setText("\uD83D\uDEE1\uFE0E");
+                tvIcone.setText("Ω");
                 tvRecompensa.setText("+1 RES");
                 break;
             default:
@@ -135,41 +169,7 @@ public class AttributesActivity extends AppCompatActivity {
                 break;
         }
 
-        // Adiciona a view montada ao LinearLayout da tela
         containerCronicas.addView(viewCronica);
-    }
-
-    private void carregarTotaisAtributos() {
-        SharedPreferences prefs = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
-        Long userId = prefs.getLong("USER_ID", -1L);
-
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
-
-        // Supondo que você tenha um endpoint que retorna o "Score" total do usuário
-        apiService.getUserStats(userId).enqueue(new Callback<UserStats>() {
-            @Override
-            public void onResponse(Call<UserStats> call, Response<UserStats> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    UserStats stats = response.body();
-
-                    // Mapeia os textos com os novos símbolos + valores
-                    TextView tvInt = findViewById(R.id.tvIntTotal);
-                    TextView tvFor = findViewById(R.id.tvForTotal);
-                    TextView tvAgi = findViewById(R.id.tvAgiTotal);
-                    TextView tvRes = findViewById(R.id.tvResTotal);
-
-                    tvInt.setText("Ψ " + stats.getIntelligence());
-                    tvFor.setText("⧟ " + stats.getStrength());
-                    tvAgi.setText("ϟ " + stats.getAgility());
-                    tvRes.setText("\uD83D\uDEE1\uFE0E " + stats.getResistance());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserStats> call, Throwable t) {
-                // Silencioso ou log de erro
-            }
-        });
     }
 
     private void configurarNavbar() {

@@ -44,6 +44,9 @@ public interface ApiService {
     @POST("/tasks/{taskId}/complete")
     Call<Task> completeTask(@Path("taskId") Long taskId);
 
+    @GET("users/{id}/stats")
+    Call<UserStats> getUserStats(@Path("id") Long userId);
+
     @POST("/tasks/{taskId}/fail")
     Call<Task> failTask(@Path("taskId") Long taskId);
 }
