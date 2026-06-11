@@ -76,23 +76,41 @@ public class HomeActivity extends AppCompatActivity {
         View navSettings = findViewById(R.id.nav_settings);
         View navAddTask = findViewById(R.id.nav_add_task);
 
-        navHome.post(() -> destacarAbaAtiva((android.view.ViewGroup) navHome));
+        if (navHome != null) {
+            navHome.post(() -> destacarAbaAtiva((android.view.ViewGroup) navHome));
 
-        navHome.setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this, "Você já está nas Missões!", Toast.LENGTH_SHORT).show());
+            navHome.setOnClickListener(v ->
+                    Toast.makeText(HomeActivity.this, "Você já está nas Missões!", Toast.LENGTH_SHORT).show());
+        }
 
-        navCharacter.setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this, "Tela do Personagem em breve!", Toast.LENGTH_SHORT).show());
+        if (navCharacter != null) {
+            navCharacter.setOnClickListener(v -> {
+                startActivity(new Intent(HomeActivity.this, CharacterActivity.class));
+                finish();
+                overridePendingTransition(0, 0);
+            });
+        }
 
-        navAddTask.setOnClickListener(v ->
-                startActivity(new Intent(HomeActivity.this, CreateTaskActivity.class)));
+        if (navAddTask != null) {
+            navAddTask.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, CreateTaskActivity.class)));
+        }
 
-        navAttributes.setOnClickListener(v -> {
-            startActivity(new Intent(HomeActivity.this, AttributesActivity.class));
-            finish();
-        });
-        navSettings.setOnClickListener(v ->
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class)));
+        if (navAttributes != null) {
+            navAttributes.setOnClickListener(v -> {
+                startActivity(new Intent(HomeActivity.this, AttributesActivity.class));
+                finish();
+                overridePendingTransition(0, 0);
+            });
+        }
+
+        if (navSettings != null) {
+            navSettings.setOnClickListener(v -> {
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                finish(); // Adicionado para não acumular telas na memória
+                overridePendingTransition(0, 0);
+            });
+        }
     }
 
     private void carregarTarefas() {

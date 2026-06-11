@@ -191,8 +191,10 @@ public class AttributesActivity extends AppCompatActivity {
         }
 
         if (navCharacter != null) {
-            navCharacter.setOnClickListener(v ->
-                    Toast.makeText(this, "Tela do Personagem em breve!", Toast.LENGTH_SHORT).show());
+            navCharacter.setOnClickListener(v -> {
+                startActivity(new Intent(AttributesActivity.this, CharacterActivity.class));
+                finish();
+                    });
         }
 
         if (navAddTask != null) {
